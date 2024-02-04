@@ -65,10 +65,11 @@ export const MapForm = ({ onSubmit, data }: MapFormProps) => {
     const transformedData: FormValues = {};
     csvData.forEach((row) => {
       Object.keys(row).forEach(() => {
-        if (row["code"] && row["value"])
-          transformedData[getCityByCode(row["code"], data)] = parseInt(
-            row["value"]
-          );
+        const code = row["code"];
+        const value = parseInt(row["value"], 10);
+
+        if (code && !isNaN(value))
+          transformedData[getCityByCode(code, data)] = value;
       });
     });
 
