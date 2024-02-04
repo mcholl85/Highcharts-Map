@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "antd": "^5.8.6",
+    "antd": "^5.14.0",
     "highcharts": "^11.1.0",
     "highcharts-react-official": "^3.2.1",
     "papaparse": "^5.4.1",
