@@ -1,1 +1,1 @@
-export type ChartData = { z: number; value: number; nom: string }[];
+export type ChartData = { code: string; value: number; nom: string }[];

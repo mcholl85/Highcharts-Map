@@ -7,13 +7,12 @@ import { Radio, Row } from "antd";
 import { BubbleMapChart } from "./features/charts/components/BubbleMapChart";
 
 function App() {
-  const { data, formValues, label, title, submitDataCharts } =
-    useDataCharts(geomap);
+  const { data, label, title, submitDataCharts } = useDataCharts(geomap);
   const [isBubbleMap, setIsBubbleMap] = useState(false);
 
   return (
     <>
-      <MapForm onSubmit={submitDataCharts} formValues={formValues} />
+      <MapForm onSubmit={submitDataCharts} data={data} />
       <br />
       <Row justify={"end"}>
         <Radio.Group>
