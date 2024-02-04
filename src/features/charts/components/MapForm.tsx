@@ -1,6 +1,7 @@
 import {
   Button,
   Col,
+  Flex,
   Form,
   Input,
   InputNumber,
@@ -83,7 +84,7 @@ export const MapForm = ({ onSubmit, data }: MapFormProps) => {
       </Button>
 
       <Modal
-        title="Formulaire"
+        title={<div style={{ fontSize: "24px" }}>Formulaire</div>}
         open={isModalOpen}
         onCancel={onCancel}
         footer={null}
@@ -95,24 +96,6 @@ export const MapForm = ({ onSubmit, data }: MapFormProps) => {
           name="mapForm"
           onFinish={onFinish}
         >
-          <Space align="baseline">
-            <DownloadCsvButton data={data} />
-
-            <Form.Item label="Fichier CSV">
-              <Upload
-                beforeUpload={handleFileChange}
-                accept=".csv"
-                maxCount={1}
-                showUploadList={false}
-              >
-                <Button icon={<UploadOutlined />}>Upload</Button>
-              </Upload>
-            </Form.Item>
-            <Button type="primary" htmlType="submit">
-              Submit
-            </Button>
-          </Space>
-
           <Row gutter={20}>
             <Col span={12}>
               <Form.Item name={"title"} label={"Titre du graphique"}>
@@ -125,6 +108,27 @@ export const MapForm = ({ onSubmit, data }: MapFormProps) => {
               </Form.Item>
             </Col>
           </Row>
+
+          <Flex justify="space-between">
+            <Space align="baseline">
+              <Form.Item label="Fichier CSV">
+                <Upload
+                  beforeUpload={handleFileChange}
+                  accept=".csv"
+                  maxCount={1}
+                  showUploadList={false}
+                >
+                  <Button icon={<UploadOutlined />}>Upload</Button>
+                </Upload>
+              </Form.Item>
+              <Button type="primary" htmlType="submit">
+                Submit
+              </Button>
+            </Space>
+
+            <DownloadCsvButton data={data} />
+          </Flex>
+
           <Row gutter={[20, 10]}>
             {[...Object.entries(formValues)].map(([key, value], index) => (
               <Col span={24} sm={12} md={12} lg={6} xl={4} key={key + index}>
