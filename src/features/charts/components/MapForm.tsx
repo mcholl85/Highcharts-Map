@@ -65,9 +65,10 @@ export const MapForm = ({ onSubmit, data }: MapFormProps) => {
     const transformedData: FormValues = {};
     csvData.forEach((row) => {
       Object.keys(row).forEach(() => {
-        transformedData[getCityByCode(row["code"], data)] = parseInt(
-          row["value"]
-        );
+        if (row["code"] && row["value"])
+          transformedData[getCityByCode(row["code"], data)] = parseInt(
+            row["value"]
+          );
       });
     });
 
