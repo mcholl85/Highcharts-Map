@@ -6,6 +6,7 @@ import {
   InputNumber,
   Modal,
   Row,
+  Space,
   Upload,
 } from "antd";
 import { UploadOutlined } from "@ant-design/icons";
@@ -16,6 +17,7 @@ import { ChartData } from "../types/chartData";
 import { createFormValuesFromData } from "../utils/createFormValuesFromData";
 import { getCityByCode } from "../utils/createDataFromMap";
 import { RcFile } from "antd/es/upload";
+import { DownloadCsvButton } from "./DownloadCsvButton";
 
 type MapFormProps = {
   onSubmit: (formValues: FormValues) => void;
@@ -91,16 +93,23 @@ export const MapForm = ({ onSubmit, data }: MapFormProps) => {
           name="mapForm"
           onFinish={onFinish}
         >
-          <Form.Item label="Fichier CSV">
-            <Upload
-              beforeUpload={handleFileChange}
-              accept=".csv"
-              maxCount={1}
-              showUploadList={false}
-            >
-              <Button icon={<UploadOutlined />}>Upload</Button>
-            </Upload>
-          </Form.Item>
+          <Space align="baseline">
+            <DownloadCsvButton data={data} />
+
+            <Form.Item label="Fichier CSV">
+              <Upload
+                beforeUpload={handleFileChange}
+                accept=".csv"
+                maxCount={1}
+                showUploadList={false}
+              >
+                <Button icon={<UploadOutlined />}>Upload</Button>
+              </Upload>
+            </Form.Item>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Space>
 
           <Row gutter={20}>
             <Col span={12}>
