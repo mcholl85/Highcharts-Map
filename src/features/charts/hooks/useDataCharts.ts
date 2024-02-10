@@ -15,6 +15,7 @@ export const useDataCharts = (geoMap: GeoJson) => {
     const newData: ChartData = [...Object.entries(formData)].map(
       ([key, value]) => ({
         code: getCodeByCity(key, initialData),
+        z: value,
         value: value,
         nom: key,
       })

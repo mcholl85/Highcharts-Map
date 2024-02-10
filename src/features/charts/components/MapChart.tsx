@@ -57,6 +57,9 @@ export const MapChart = ({ data, geoMap, title, label }: MapChartProps) => {
           enabled: true,
           format: "{point.properties.nom}",
         },
+        tooltip: {
+          pointFormat: `{point.properties.nom}: {point.z} ${label}`,
+        },
       },
     ],
   };

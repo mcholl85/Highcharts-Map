@@ -6,6 +6,7 @@ export const createDataFromMap = (geoMap: GeoJson): ChartData =>
     .sort((a, b) => a.properties.code.localeCompare(b.properties.code))
     .map(({ properties }) => ({
       code: properties.code,
+      z: 0,
       value: 0,
       nom: properties.nom,
     }));
