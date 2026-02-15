@@ -8,9 +8,9 @@ type DownloadCsvButtonProps = {
 export const DownloadCsvButton = ({ data }: DownloadCsvButtonProps) => {
   const generateCsvContent = () => {
     let csvContent = "data:text/csv;charset=utf-8,";
-    csvContent += "code,ville,value\n"; // En-têtes de colonne
+    csvContent += "code,ville,value\n";
     data.forEach((item) => {
-      csvContent += `${item.code},${item.nom}\n`; // Remplissez la colonne code et laissez la colonne value vide
+      csvContent += `${item.code},${item.nom},\n`;
     });
 
     return encodeURI(csvContent);

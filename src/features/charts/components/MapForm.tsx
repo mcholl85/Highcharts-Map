@@ -5,6 +5,7 @@ import {
   Form,
   Input,
   InputNumber,
+  message,
   Modal,
   Row,
   Space,
@@ -26,7 +27,9 @@ type MapFormProps = {
 };
 
 interface CsvData {
-  [key: string]: string;
+  code?: string;
+  ville?: string;
+  value?: string;
 }
 
 export const MapForm = ({ onSubmit, data }: MapFormProps) => {
@@ -54,8 +57,13 @@ export const MapForm = ({ onSubmit, data }: MapFormProps) => {
   const parseCsv = (file: File) => {
     Papa.parse(file, {
       complete: (result: Papa.ParseResult<CsvData>) => {
-        console.log("Parsed Data:", result.data);
-        form.setFieldsValue(transformCsvToFormValues(result.data));
+        const { values, unknownCodes } = transformCsvToFormValues(result.data);
+        form.setFieldsValue(values);
+        if (unknownCodes.length > 0) {
+          message.error(
+            `Code(s) inconnu(s) dans le CSV: ${unknownCodes.join(", ")}`
+          );
+        }
       },
       header: true,
       skipEmptyLines: true,
@@ -64,17 +72,26 @@ export const MapForm = ({ onSubmit, data }: MapFormProps) => {
 
   const transformCsvToFormValues = (csvData: CsvData[]) => {
     const transformedData: FormValues = {};
-    csvData.forEach((row) => {
-      Object.keys(row).forEach(() => {
-        const code = row["code"];
-        const value = parseInt(row["value"], 10);
+    const unknownCodes = new Set<string>();
 
-        if (code && !isNaN(value))
-          transformedData[getCityByCode(code, data)] = value;
-      });
+    csvData.forEach((row) => {
+      const code = row.code?.trim();
+      const value = Number.parseInt(row.value ?? "", 10);
+
+      if (!code || Number.isNaN(value)) {
+        return;
+      }
+
+      const city = getCityByCode(code, data);
+      if (!city) {
+        unknownCodes.add(code);
+        return;
+      }
+
+      transformedData[city] = value;
     });
 
-    return transformedData;
+    return { values: transformedData, unknownCodes: [...unknownCodes] };
   };
 
   return (
