@@ -13,6 +13,7 @@ type MapChartProps = {
 export const MapChart = ({ data, geoMap, title, label }: MapChartProps) => {
   const min = Math.min(...data.map((d) => d.value));
   const max = Math.max(...data.map((d) => d.value));
+  const allValuesAreZero = max === 0;
 
   const zoneOptions = {
     chart: {
@@ -39,7 +40,7 @@ export const MapChart = ({ data, geoMap, title, label }: MapChartProps) => {
       max: max,
       tickPixelInterval: 50,
       minColor: "#FFFFFF",
-      maxColor: "#000091",
+      maxColor: allValuesAreZero ? "#FFFFFF" : "#000091",
     },
 
     legend: {
