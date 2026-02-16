@@ -8,7 +8,7 @@ import {
   Row,
 } from "antd";
 import { FormValues } from "../types/fomValues";
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { ChartData } from "../types/chartData";
 import { createFormValuesFromData } from "../utils/createFormValuesFromData";
 
@@ -21,7 +21,7 @@ export const MapForm = ({ onSubmit, data }: MapFormProps) => {
   const [form] = Form.useForm();
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const formValues = createFormValuesFromData(data);
+  const formValues = useMemo(() => createFormValuesFromData(data), [data]);
   const watchedValues = Form.useWatch([], form) as FormValues | undefined;
 
   useEffect(() => {

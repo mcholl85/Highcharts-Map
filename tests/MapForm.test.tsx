@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { describe, expect, it, vi } from "vitest";
 import { MapForm } from "../src/features/charts/components/MapForm";
@@ -19,6 +19,11 @@ describe("MapForm", () => {
     await user.type(screen.getByLabelText("Titre du graphique"), "Population");
     await user.type(screen.getByLabelText("Unité de mesure"), "habitants");
 
+    const aubervilliersInput = document.getElementById(
+      "mapForm_Aubervilliers"
+    ) as HTMLInputElement;
+    fireEvent.change(aubervilliersInput, { target: { value: "42" } });
+
     const submitButtons = screen.getAllByRole("button", { name: "Submit" });
     await user.click(submitButtons[0]);
 
@@ -27,7 +32,7 @@ describe("MapForm", () => {
         expect.objectContaining({
           title: "Population",
           label: "habitants",
-          Aubervilliers: expect.any(Number),
+          Aubervilliers: 42,
           Bondy: expect.any(Number),
         })
       );
