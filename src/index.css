@@ -151,6 +151,19 @@ a {
   padding-top: 0.85rem;
 }
 
+.city-values-grid .ant-form-item {
+  margin-bottom: 6px;
+}
+
+.city-value-item-zero .ant-input-number-group-addon,
+.city-value-item-zero .ant-input-number-input-wrap {
+  background: #fff3e8;
+}
+
+.city-value-item-zero .ant-input-number-group-addon {
+  border-color: #f0d9c0;
+}
+
 .mode-toggle {
   display: inline-flex;
 }

@@ -12,17 +12,26 @@ export const useDataCharts = (geoMap: GeoJson) => {
 
   const submitDataCharts = (formValues: FormValues) => {
     const { title, label, ...formData } = formValues;
-    const newData: ChartData = [...Object.entries(formData)].map(
-      ([key, value]) => ({
-        code: getCodeByCity(key, initialData),
-        z: value,
-        value: value,
-        nom: key,
-      })
-    );
+    const valueByCity = new Map<string, number>();
 
-    setTitle(title as string);
-    setLabel(label as string);
+    Object.entries(formData).forEach(([city, value]) => {
+      if (typeof value === "number" && !Number.isNaN(value)) {
+        valueByCity.set(city, value);
+      }
+    });
+
+    const newData: ChartData = initialData.map((chart) => {
+      const nextValue = valueByCity.get(chart.nom) ?? 0;
+      return {
+        code: getCodeByCity(chart.nom, initialData),
+        z: nextValue,
+        value: nextValue,
+        nom: chart.nom,
+      };
+    });
+
+    setTitle(typeof title === "string" ? title : "");
+    setLabel(typeof label === "string" ? label : "");
     setData(newData);
   };
 

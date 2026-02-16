@@ -40,4 +40,19 @@ describe("useDataCharts", () => {
       { code: "93010", nom: "Bondy", value: 10, z: 10 },
     ]);
   });
+
+  it("keeps all cities and defaults missing values to zero on partial submit", () => {
+    const { result } = renderHook(() => useDataCharts(geoMap));
+
+    act(() => {
+      result.current.submitDataCharts({
+        Aubervilliers: 7,
+      });
+    });
+
+    expect(result.current.data).toEqual([
+      { code: "93001", nom: "Aubervilliers", value: 7, z: 7 },
+      { code: "93010", nom: "Bondy", value: 0, z: 0 },
+    ]);
+  });
 });
