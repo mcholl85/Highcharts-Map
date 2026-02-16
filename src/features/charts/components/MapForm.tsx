@@ -106,6 +106,7 @@ export const MapForm = ({ onSubmit, data }: MapFormProps) => {
         onCancel={onCancel}
         footer={null}
         width={"100%"}
+        style={{ top: 16 }}
       >
         <Form
           initialValues={formValues}
